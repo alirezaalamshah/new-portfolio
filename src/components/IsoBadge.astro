@@ -1,0 +1,241 @@
+---
+// Small isometric section badges — same family as HeroScene.
+// Spec in .claude/skills/ui-ux/SKILL.md: token colors only, decorative,
+// gentle float, ≤3KB each.
+
+interface Props {
+  variant: 'portfolio' | 'products' | 'tutorials' | 'about' | 'contact';
+}
+
+const { variant } = Astro.props;
+---
+
+<svg class="iso-badge" viewBox="0 0 160 160" aria-hidden="true" style="direction: ltr">
+  <!-- shared platform -->
+  <polygon class="platform" points="80,92 142,123 80,154 18,123" />
+  <ellipse class="shadow" cx="80" cy="122" rx="42" ry="12" />
+
+  {variant === 'portfolio' && (
+    <g class="float">
+      {/* stacked project plates */}
+      <g>
+        <polygon class="face-mid" points="80,70 128.5,98 80,126 31.5,98" />
+        <polygon class="side-l" points="31.5,98 31.5,107 80,135 80,126" />
+        <polygon class="side-r" points="128.5,98 128.5,107 80,135 80,126" />
+      </g>
+      <g>
+        <polygon class="face-warm" points="80,44 128.5,72 80,100 31.5,72" />
+        <polygon class="side-l" points="31.5,72 31.5,81 80,109 80,100" />
+        <polygon class="side-r" points="128.5,72 128.5,81 80,109 80,100" />
+      </g>
+      <g>
+        <polygon class="face-accent" points="80,18 128.5,46 80,74 31.5,46" />
+        <polygon class="side-l" points="31.5,46 31.5,55 80,83 80,74" />
+        <polygon class="side-r" points="128.5,46 128.5,55 80,83 80,74" />
+      </g>
+    </g>
+  )}
+
+  {variant === 'products' && (
+    <g class="float">
+      {/* package cube + floating mini cube */}
+      <polygon class="face-warm" points="80,34 125,60 80,86 35,60" />
+      <polygon class="cube-l" points="35,60 35,112 80,138 80,86" />
+      <polygon class="cube-r" points="125,60 125,112 80,138 80,86" />
+      {/* tape strip down the front-left face */}
+      <polygon class="tape" points="55.5,72 55.5,124 66,130 66,78" />
+      <g class="float slow">
+        <polygon class="face-accent" points="128,6 143.6,15 128,24 112.4,15" />
+        <polygon class="cube-l" points="112.4,15 112.4,33 128,42 128,24" />
+        <polygon class="cube-r" points="143.6,15 143.6,33 128,42 128,24" />
+      </g>
+    </g>
+  )}
+
+  {variant === 'tutorials' && (
+    <g class="float">
+      {/* open book */}
+      <polygon class="page" points="80,48 28,32 28,72 80,88" />
+      <polygon class="page" points="80,48 132,32 132,72 80,88" />
+      <line class="ink" x1="40" y1="48" x2="68" y2="57" />
+      <line class="ink dim" x1="40" y1="58" x2="62" y2="65" />
+      <line class="ink" x1="120" y1="48" x2="92" y2="57" />
+      <line class="ink dim" x1="120" y1="58" x2="98" y2="65" />
+      <line class="spine" x1="80" y1="48" x2="80" y2="88" />
+      <text class="glyph" x="80" y="22" text-anchor="middle" font-size="14">&lt;/&gt;</text>
+    </g>
+  )}
+
+  {variant === 'about' && (
+    <g class="float">
+      {/* isometric ID card */}
+      <polygon class="face-accent" points="44,32 127.1,80 134.1,76 51,28" />
+      <polygon class="side-r" points="127.1,80 127.1,136 134.1,132 134.1,76" />
+      <g transform="matrix(0.866,0.5,0,1,44,32)">
+        <rect class="card-face" x="0" y="0" width="96" height="56" rx="6" />
+        <circle class="avatar" cx="22" cy="28" r="11" />
+        <rect class="line-strong" x="42" y="18" width="38" height="5" rx="2.5" />
+        <rect class="line-dim" x="42" y="31" width="28" height="5" rx="2.5" />
+      </g>
+    </g>
+  )}
+
+  {variant === 'contact' && (
+    <g class="float">
+      {/* paper plane + flight path */}
+      <path class="flight" d="M18,92 Q52,106 92,76" />
+      <polygon class="wing" points="30,52 126,22 72,66" />
+      <polygon class="fold" points="72,66 126,22 84,82" />
+      <polygon class="keel" points="72,66 84,82 66,74" />
+    </g>
+  )}
+</svg>
+
+<style>
+  .iso-badge {
+    display: block;
+    width: clamp(6rem, 13vw, 9rem);
+    height: auto;
+    flex: 0 0 auto;
+  }
+
+  .platform {
+    fill: color-mix(in srgb, var(--text) 5%, var(--bg));
+    stroke: var(--border);
+    stroke-width: 1.5;
+  }
+
+  .shadow {
+    fill: rgb(0 0 0 / 0.16);
+  }
+
+  .face-accent {
+    fill: color-mix(in srgb, var(--accent) 30%, var(--bg-raised));
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .face-warm {
+    fill: color-mix(in srgb, var(--accent-warm) 24%, var(--bg-raised));
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .face-mid {
+    fill: color-mix(in srgb, var(--accent) 14%, var(--bg-raised));
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .side-l,
+  .cube-l {
+    fill: color-mix(in srgb, var(--accent) 12%, var(--bg-raised));
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .side-r,
+  .cube-r {
+    fill: var(--bg-raised);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .tape {
+    fill: color-mix(in srgb, var(--accent-warm) 40%, var(--bg-raised));
+  }
+
+  .page {
+    fill: var(--bg-raised);
+    stroke: var(--border);
+    stroke-width: 1.5;
+  }
+
+  .spine {
+    stroke: var(--border);
+    stroke-width: 1.5;
+  }
+
+  .ink {
+    stroke: var(--accent);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+
+  .ink.dim {
+    stroke: var(--text-muted);
+  }
+
+  .glyph {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    fill: var(--accent);
+  }
+
+  .card-face {
+    fill: var(--bg);
+    stroke: var(--border);
+    stroke-width: 1.5;
+  }
+
+  .avatar {
+    fill: color-mix(in srgb, var(--accent) 55%, var(--bg-raised));
+  }
+
+  .line-strong {
+    fill: var(--text);
+  }
+
+  .line-dim {
+    fill: var(--text-muted);
+  }
+
+  .flight {
+    fill: none;
+    stroke: var(--accent-warm);
+    stroke-width: 2;
+    stroke-dasharray: 4 6;
+    stroke-linecap: round;
+    opacity: 0.8;
+  }
+
+  .wing {
+    fill: color-mix(in srgb, var(--accent) 42%, var(--bg-raised));
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .fold {
+    fill: color-mix(in srgb, var(--accent) 20%, var(--bg-raised));
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .keel {
+    fill: var(--bg-raised);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .float {
+      animation: badge-float 7s ease-in-out infinite;
+    }
+
+    .float.slow {
+      animation-duration: 8.5s;
+      animation-delay: -3s;
+    }
+
+    @keyframes badge-float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-5px);
+      }
+    }
+  }
+</style>

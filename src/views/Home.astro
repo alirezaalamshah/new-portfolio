@@ -1,0 +1,195 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ProductCard from '../components/ProductCard.astro';
+import PostCard from '../components/PostCard.astro';
+import HeroScene from '../components/HeroScene.astro';
+import { localizePath, type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { contact } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+
+const inLang = (id: string) => id.startsWith(`${lang}/`);
+
+const projects = (await getCollection('projects', (e) => inLang(e.id) && e.data.featured)).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const products = (await getCollection('products', (e) => inLang(e.id)))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+const posts = (await getCollection('tutorials', (e) => inLang(e.id) && !e.data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: t.site.fullName,
+  jobTitle: t.site.role,
+  url: Astro.site!.href,
+  email: `mailto:${contact.email}`,
+  sameAs: contact.socials.map((s) => s.url),
+};
+---
+
+<BaseLayout
+  lang={lang}
+  title={t.site.fullName}
+  description={t.site.description}
+  path="/"
+  isHome
+  jsonLd={personJsonLd}
+>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="hero-greeting">{t.home.heroGreeting}</p>
+      <h1 class="hero-title">{t.home.heroTitle}</h1>
+      <p class="hero-text">{t.home.heroText}</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href={localizePath(lang, '/portfolio')}>{t.home.ctaPortfolio}</a>
+        <a class="btn btn-secondary" href={localizePath(lang, '/contact')}>{t.home.ctaContact}</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <HeroScene />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="featured-heading">
+    <div class="section-head">
+      <h2 id="featured-heading">{t.home.featuredProjects}</h2>
+      <a href={localizePath(lang, '/portfolio')}>{t.home.viewAll}</a>
+    </div>
+    <div class="grid">
+      {projects.map((project) => <ProjectCard lang={lang} project={project} />)}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="products-heading">
+    <div class="section-head">
+      <h2 id="products-heading">{t.home.productsTeaser}</h2>
+      <a href={localizePath(lang, '/products')}>{t.home.viewAll}</a>
+    </div>
+    <p class="section-lede">{t.home.productsTeaserText}</p>
+    <div class="grid">
+      {products.map((product) => <ProductCard lang={lang} product={product} />)}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="tutorials-heading">
+    <div class="section-head">
+      <h2 id="tutorials-heading">{t.home.latestTutorials}</h2>
+      <a href={localizePath(lang, '/tutorials')}>{t.home.viewAll}</a>
+    </div>
+    <div class="grid">
+      {posts.map((post) => <PostCard lang={lang} post={post} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
+    align-items: center;
+    gap: var(--space-6);
+    padding-block: var(--space-7);
+  }
+
+  /* faint dot-grid backdrop, fading out from the visual side */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--text) 14%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 26px 26px;
+    mask-image: radial-gradient(ellipse 70% 80% at 65% 45%, black 20%, transparent 75%);
+    pointer-events: none;
+  }
+
+  .hero-copy {
+    position: relative;
+    max-width: 44rem;
+  }
+
+  .hero-visual {
+    position: relative;
+  }
+
+  .hero-greeting {
+    color: var(--accent);
+    font-weight: 600;
+    margin-block-end: var(--space-2);
+  }
+
+  .hero-greeting::before {
+    content: '$ ';
+    font-family: var(--font-mono);
+    color: var(--accent-warm);
+  }
+
+  .hero-title {
+    margin-block-end: var(--space-3);
+  }
+
+  /* blinking terminal caret — the site's single caret */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-title::after {
+      content: '';
+      display: inline-block;
+      width: 0.45ch;
+      height: 0.9em;
+      margin-inline-start: 0.12em;
+      vertical-align: text-bottom;
+      background: var(--accent);
+      animation: caret-blink 1.1s steps(2, start) infinite;
+    }
+
+    @keyframes caret-blink {
+      to {
+        visibility: hidden;
+      }
+    }
+  }
+
+  .hero-text {
+    color: var(--text-muted);
+    font-size: var(--fs-md);
+    margin-block-end: var(--space-4);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 56rem) {
+    .hero {
+      grid-template-columns: 1fr;
+      padding-block-start: var(--space-6);
+    }
+
+    .hero-visual {
+      max-width: 24rem;
+      margin-inline: auto;
+      width: 100%;
+    }
+  }
+
+  .section-lede {
+    color: var(--text-muted);
+    margin-block-end: var(--space-4);
+  }
+</style>

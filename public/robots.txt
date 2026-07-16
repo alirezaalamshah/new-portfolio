@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alirezaalamshah.ir/sitemap-index.xml

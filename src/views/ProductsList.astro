@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import IsoBadge from '../components/IsoBadge.astro';
+import { type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+
+const products = (await getCollection('products', (e) => e.id.startsWith(`${lang}/`))).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<BaseLayout lang={lang} title={t.products.title} description={t.products.metaDescription} path="/products">
+  <section class="page">
+    <header class="page-head">
+      <div class="head-copy">
+        <h1>{t.products.title}</h1>
+        <p class="lede">{t.products.intro}</p>
+      </div>
+      <IsoBadge variant="products" />
+    </header>
+    <div class="grid">
+      {products.map((product) => <ProductCard lang={lang} product={product} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block-start: var(--space-6);
+  }
+
+  .lede {
+    color: var(--text-muted);
+    max-width: var(--measure);
+    margin-block-end: var(--space-5);
+  }
+</style>

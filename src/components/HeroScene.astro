@@ -1,0 +1,199 @@
+---
+// Isometric "developer desk" hero scene — spec in .claude/skills/ui-ux/SKILL.md.
+// Hand-drawn inline SVG, token colors only, purely decorative.
+---
+
+<svg
+  class="hero-scene"
+  viewBox="0 0 520 470"
+  role="img"
+  aria-hidden="true"
+  style="direction: ltr"
+>
+  <defs>
+    <filter id="soft-blur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="42" />
+    </filter>
+    <filter id="shadow-blur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10" />
+    </filter>
+  </defs>
+
+  <!-- ambient accent glow -->
+  <ellipse cx="260" cy="240" rx="200" ry="160" class="glow" filter="url(#soft-blur)" />
+
+  <!-- isometric platform -->
+  <polygon points="251,233 453,330 251,427 49,330" class="platform" />
+
+  <!-- terminal shadow on the platform -->
+  <ellipse cx="252" cy="337" rx="138" ry="32" class="shadow" filter="url(#shadow-blur)" />
+
+  <!-- terminal slab: thickness faces (top + right side) -->
+  <polygon points="130,90 372.5,230 384.6,223 142.1,83" class="slab-top" />
+  <polygon points="372.5,230 372.5,400 384.6,393 384.6,223" class="slab-side" />
+
+  <!-- terminal screen (isometric left-facing plane) -->
+  <g transform="matrix(0.866,0.5,0,1,130,90)">
+    <rect x="0" y="0" width="280" height="170" rx="10" class="screen" />
+    <rect x="0" y="0" width="280" height="26" rx="10" class="chrome" />
+    <rect x="0" y="14" width="280" height="12" class="chrome" />
+    <circle cx="17" cy="13" r="4.5" style="fill: var(--accent-warm)" />
+    <circle cx="35" cy="13" r="4.5" style="fill: var(--accent)" />
+    <circle cx="53" cy="13" r="4.5" style="fill: var(--text-muted)" />
+
+    <g class="code" font-size="13">
+      <text x="14" y="54"><tspan class="tk-warm">$</tspan><tspan class="tk-text" dx="7">whoami</tspan></text>
+      <text x="14" y="78" class="tk-muted">alireza · python + web</text>
+      <text x="14" y="102"><tspan class="tk-warm">$</tspan><tspan class="tk-text" dx="7">python deploy.py</tspan></text>
+      <text x="14" y="126" class="tk-accent">✓ 37 pages · 0.4s</text>
+      <rect x="14" y="138" width="8" height="14" style="fill: var(--accent)" />
+    </g>
+  </g>
+
+  <!-- floating glyph cubes -->
+  <g class="float f1">
+    <g transform="translate(415,85)">
+      <polygon points="0,0 34.6,20 0,40 -34.6,20" class="cube-top" />
+      <polygon points="-34.6,20 -34.6,60 0,80 0,40" class="cube-left" />
+      <polygon points="34.6,20 34.6,60 0,80 0,40" class="cube-right" />
+      <text transform="matrix(0.866,0.5,-0.866,0.5,0,0)" x="20" y="26" text-anchor="middle" class="glyph tk-accent" font-size="15">&lt;/&gt;</text>
+    </g>
+  </g>
+
+  <g class="float f2">
+    <g transform="translate(72,140)">
+      <polygon points="0,0 26,15 0,30 -26,15" class="cube-top warm" />
+      <polygon points="-26,15 -26,45 0,60 0,30" class="cube-left warm" />
+      <polygon points="26,15 26,45 0,60 0,30" class="cube-right" />
+      <text transform="matrix(0.866,0.5,-0.866,0.5,0,0)" x="15" y="20" text-anchor="middle" class="glyph tk-warm" font-size="12">{ }</text>
+    </g>
+  </g>
+
+  <g class="float f3">
+    <g transform="translate(442,275)">
+      <polygon points="0,0 29.4,17 0,34 -29.4,17" class="cube-top" />
+      <polygon points="-29.4,17 -29.4,51 0,68 0,34" class="cube-left" />
+      <polygon points="29.4,17 29.4,51 0,68 0,34" class="cube-right" />
+      <text transform="matrix(0.866,0.5,-0.866,0.5,0,0)" x="17" y="23" text-anchor="middle" class="glyph tk-muted" font-size="14">#</text>
+    </g>
+  </g>
+
+  <!-- sparks -->
+  <circle cx="120" cy="70" r="3" class="spark" />
+  <circle cx="470" cy="190" r="2.5" class="spark" />
+  <circle cx="55" cy="290" r="2" class="spark" />
+</svg>
+
+<style>
+  .hero-scene {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .glow {
+    fill: var(--accent);
+    opacity: 0.14;
+  }
+
+  .platform {
+    fill: color-mix(in srgb, var(--text) 5%, var(--bg));
+    stroke: var(--border);
+    stroke-width: 1.5;
+  }
+
+  .shadow {
+    fill: rgb(0 0 0 / 0.22);
+  }
+
+  .screen {
+    fill: var(--bg);
+    stroke: var(--border);
+    stroke-width: 1.5;
+  }
+
+  .chrome {
+    fill: var(--bg-raised);
+  }
+
+  .slab-top {
+    fill: color-mix(in srgb, var(--accent) 20%, var(--bg-raised));
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .slab-side {
+    fill: color-mix(in srgb, var(--accent) 9%, var(--bg-raised));
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .cube-top {
+    fill: color-mix(in srgb, var(--accent) 30%, var(--bg-raised));
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .cube-left {
+    fill: color-mix(in srgb, var(--accent) 14%, var(--bg-raised));
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .cube-right {
+    fill: var(--bg-raised);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .cube-top.warm {
+    fill: color-mix(in srgb, var(--accent-warm) 26%, var(--bg-raised));
+  }
+
+  .cube-left.warm {
+    fill: color-mix(in srgb, var(--accent-warm) 12%, var(--bg-raised));
+  }
+
+  .code text,
+  .glyph {
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
+
+  .tk-text { fill: var(--text); }
+  .tk-muted { fill: var(--text-muted); }
+  .tk-accent { fill: var(--accent); }
+  .tk-warm { fill: var(--accent-warm); }
+
+  .spark {
+    fill: var(--accent);
+    opacity: 0.5;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .float {
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .f2 {
+      animation-duration: 8s;
+      animation-delay: -2.5s;
+    }
+
+    .f3 {
+      animation-duration: 6.5s;
+      animation-delay: -4s;
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { localizePath, splitId, type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  product: CollectionEntry<'products'>;
+}
+
+const { lang, product } = Astro.props;
+const { slug } = splitId(product.id);
+const t = ui[lang];
+const kindLabel = product.data.kind === 'software' ? t.products.kindSoftware : t.products.kindCourse;
+---
+
+<a class="card" data-tilt href={localizePath(lang, `/products/${slug}`)}>
+  <span class="tag">{kindLabel}</span>
+  <h3 class="product-title">{product.data.title}</h3>
+  <p>{product.data.description}</p>
+</a>
+
+<style>
+  .product-title {
+    margin-block-start: var(--space-3);
+  }
+</style>

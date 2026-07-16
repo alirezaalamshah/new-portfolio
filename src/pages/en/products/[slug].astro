@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import ProductPage from '../../../views/ProductPage.astro';
+import { splitId } from '../../../i18n';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('products', (e) => e.id.startsWith('en/'));
+  return entries.map((product) => ({
+    params: { slug: splitId(product.id).slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+---
+
+<ProductPage lang="en" product={product} />

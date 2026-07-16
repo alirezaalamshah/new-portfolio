@@ -1,0 +1,20 @@
+---
+import { getCollection } from 'astro:content';
+import TutorialPage from '../../../views/TutorialPage.astro';
+import { splitId } from '../../../i18n';
+
+export async function getStaticPaths() {
+  const entries = await getCollection(
+    'tutorials',
+    (e) => e.id.startsWith('de/') && !e.data.draft
+  );
+  return entries.map((post) => ({
+    params: { slug: splitId(post.id).slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<TutorialPage lang="de" post={post} />

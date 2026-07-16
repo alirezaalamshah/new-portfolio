@@ -1,0 +1,20 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { localizePath, splitId, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  project: CollectionEntry<'projects'>;
+}
+
+const { lang, project } = Astro.props;
+const { slug } = splitId(project.id);
+---
+
+<a class="card" data-tilt href={localizePath(lang, `/portfolio/${slug}`)}>
+  <h3>{project.data.title}</h3>
+  <p>{project.data.description}</p>
+  <ul class="tags">
+    {project.data.tech.map((item) => <li class="tag">{item}</li>)}
+  </ul>
+</a>

@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import IsoBadge from '../components/IsoBadge.astro';
+import { type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { contact } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: t.site.fullName,
+  jobTitle: t.site.role,
+  url: Astro.site!.href,
+  email: `mailto:${contact.email}`,
+  sameAs: contact.socials.map((s) => s.url),
+};
+---
+
+<BaseLayout
+  lang={lang}
+  title={t.about.title}
+  description={t.about.metaDescription}
+  path="/about"
+  jsonLd={personJsonLd}
+>
+  <article class="page">
+    <header class="page-head">
+      <div class="head-copy">
+        <h1>{t.about.title}</h1>
+        <div class="prose">
+          {t.about.intro.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+      <IsoBadge variant="about" />
+    </header>
+
+    <h2>{t.about.skillsTitle}</h2>
+    <div class="grid">
+      {t.about.skillGroups.map((group) => (
+        <div class="card">
+          <h3>{group.title}</h3>
+          <p>{group.items}</p>
+        </div>
+      ))}
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block-start: var(--space-6);
+  }
+
+  .page h2 {
+    margin-block: var(--space-6) var(--space-4);
+  }
+</style>

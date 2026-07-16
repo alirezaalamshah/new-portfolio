@@ -1,0 +1,56 @@
+/* ── Design tokens ── source of truth: .claude/skills/ui-ux/SKILL.md ── */
+
+:root {
+  /* dark (default) */
+  --bg: #0b0e14;
+  --bg-raised: #131722;
+  --text: #e6e9f0;
+  --text-muted: #8b93a7;
+  --accent: #7c6cff;
+  --on-accent: #0b0e14;
+  --accent-warm: #ffb454;
+  --border: #232838;
+  --shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+
+  color-scheme: dark;
+
+  /* type scale */
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.25rem;
+  --fs-lg: 1.563rem;
+  --fs-xl: 1.953rem;
+  --fs-2xl: 2.441rem;
+
+  /* spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4rem;
+  --space-8: 6rem;
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --measure: 65ch;
+  --container: 72rem;
+
+  --font-sans: Vazirmatn, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+
+:root[data-theme='light'] {
+  --bg: #fafaf8;
+  --bg-raised: #ffffff;
+  --text: #1a1d26;
+  --text-muted: #5a6172;
+  --accent: #5b4be0;
+  --on-accent: #ffffff;
+  --accent-warm: #b26b00;
+  --border: #e4e2dc;
+  --shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+
+  color-scheme: light;
+}

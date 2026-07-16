@@ -1,0 +1,64 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { localizePath, type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { slugifyTag } from '../lib/tags';
+
+interface Props {
+  lang: Lang;
+  tag: string;
+  posts: CollectionEntry<'tutorials'>[];
+}
+
+const { lang, tag, posts } = Astro.props;
+const t = ui[lang];
+
+const sorted = [...posts].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const title = `${t.tutorials.tagLabel}: ${tag}`;
+---
+
+<BaseLayout
+  lang={lang}
+  title={title}
+  description={`${title} — ${t.tutorials.metaDescription}`}
+  path={`/tutorials/tag/${slugifyTag(tag)}`}
+  noAlternates
+>
+  <section class="page">
+    <h1><span class="tag-mark" aria-hidden="true">#</span>{tag}</h1>
+    <p class="lede">{t.tutorials.intro}</p>
+    <div class="grid">
+      {sorted.map((post) => <PostCard lang={lang} post={post} />)}
+    </div>
+    <p class="back">
+      <a href={localizePath(lang, '/tutorials')}>
+        <span class="flip-rtl" aria-hidden="true">←</span>
+        {t.tutorials.backToList}
+      </a>
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block-start: var(--space-6);
+  }
+
+  .tag-mark {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    margin-inline-end: 0.15em;
+  }
+
+  .lede {
+    color: var(--text-muted);
+    max-width: var(--measure);
+    margin-block-end: var(--space-5);
+  }
+
+  .back {
+    margin-block-start: var(--space-6);
+  }
+</style>

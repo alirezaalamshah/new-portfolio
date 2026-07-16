@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import TagPage from '../../../../views/TagPage.astro';
+import { slugifyTag } from '../../../../lib/tags';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('tutorials', (e) => e.id.startsWith('de/') && !e.data.draft);
+  const tags = new Map<string, { tag: string; posts: typeof posts }>();
+  for (const post of posts) {
+    for (const tag of post.data.tags) {
+      const slug = slugifyTag(tag);
+      if (!tags.has(slug)) tags.set(slug, { tag, posts: [] });
+      tags.get(slug)!.posts.push(post);
+    }
+  }
+  return [...tags.entries()].map(([slug, v]) => ({
+    params: { tag: slug },
+    props: { tag: v.tag, posts: v.posts },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<TagPage lang="de" tag={tag} posts={posts} />

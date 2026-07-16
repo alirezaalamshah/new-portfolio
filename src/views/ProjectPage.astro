@@ -1,0 +1,110 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localizePath, splitId, type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { breadcrumbJsonLd } from '../lib/seo';
+
+interface Props {
+  lang: Lang;
+  project: CollectionEntry<'projects'>;
+}
+
+const { lang, project } = Astro.props;
+const t = ui[lang];
+const { slug } = splitId(project.id);
+const { Content } = await render(project);
+
+const path = `/portfolio/${slug}`;
+const jsonLd = [
+  breadcrumbJsonLd(Astro.site!, lang, [
+    { name: t.nav.home, path: '/' },
+    { name: t.portfolio.title, path: '/portfolio' },
+    { name: project.data.title, path },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.data.title,
+    description: project.data.description,
+    dateCreated: String(project.data.year),
+    author: { '@type': 'Person', name: t.site.fullName },
+  },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={project.data.title}
+  description={project.data.description}
+  path={path}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <article class="page">
+    <header class="page-header">
+      <h1>{project.data.title}</h1>
+      <p class="meta">
+        {t.portfolio.year}: {project.data.year}
+      </p>
+      <ul class="tags">
+        {project.data.tech.map((item) => <li class="tag">{item}</li>)}
+      </ul>
+      {(project.data.demo || project.data.source || project.data.pdf) && (
+        <p class="links">
+          {project.data.demo && (
+            <a class="btn btn-primary" href={project.data.demo} rel="noopener">
+              {t.portfolio.demo}
+            </a>
+          )}
+          {project.data.source && (
+            <a class="btn btn-secondary" href={project.data.source} rel="noopener">
+              {t.portfolio.source}
+            </a>
+          )}
+          {project.data.pdf && (
+            <a class="btn btn-secondary" href={project.data.pdf}>
+              {t.portfolio.pdf}
+            </a>
+          )}
+        </p>
+      )}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <p class="back">
+      <a href={localizePath(lang, '/portfolio')}>
+        <span class="flip-rtl" aria-hidden="true">←</span>
+        {t.portfolio.backToList}
+      </a>
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block-start: var(--space-6);
+    max-width: var(--measure);
+  }
+
+  .page-header {
+    margin-block-end: var(--space-5);
+    padding-block-end: var(--space-4);
+    border-block-end: 1px solid var(--border);
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block-start: var(--space-4);
+  }
+
+  .back {
+    margin-block-start: var(--space-6);
+  }
+</style>

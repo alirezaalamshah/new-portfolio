@@ -1,0 +1,122 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localizePath, splitId, type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { breadcrumbJsonLd } from '../lib/seo';
+
+interface Props {
+  lang: Lang;
+  product: CollectionEntry<'products'>;
+}
+
+const { lang, product } = Astro.props;
+const t = ui[lang];
+const { slug } = splitId(product.id);
+const { Content } = await render(product);
+
+const path = `/products/${slug}`;
+const kindLabel = product.data.kind === 'software' ? t.products.kindSoftware : t.products.kindCourse;
+
+const jsonLd = [
+  breadcrumbJsonLd(Astro.site!, lang, [
+    { name: t.nav.home, path: '/' },
+    { name: t.products.title, path: '/products' },
+    { name: product.data.title, path },
+  ]),
+  // No `offers` while the shop is showcase-only; add it when checkout goes live.
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.data.title,
+    description: product.data.description,
+    brand: { '@type': 'Person', name: t.site.fullName },
+  },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={product.data.title}
+  description={product.data.description}
+  path={path}
+  jsonLd={jsonLd}
+>
+  <article class="page">
+    <header class="page-header">
+      <span class="tag">{kindLabel}</span>
+      <h1 class="product-title">{product.data.title}</h1>
+      <p class="meta">{product.data.description}</p>
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <h2>{t.products.featuresTitle}</h2>
+    <ul class="features">
+      {product.data.features.map((feature) => <li>{feature}</li>)}
+    </ul>
+
+    <aside class="buy-box">
+      <p class="buy-note">{t.products.buyNote}</p>
+      <a class="btn btn-primary" href={localizePath(lang, '/contact')}>{t.products.buyCta}</a>
+    </aside>
+
+    <p class="back">
+      <a href={localizePath(lang, '/products')}>
+        <span class="flip-rtl" aria-hidden="true">←</span>
+        {t.products.backToList}
+      </a>
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block-start: var(--space-6);
+    max-width: var(--measure);
+  }
+
+  .page-header {
+    margin-block-end: var(--space-5);
+  }
+
+  .product-title {
+    margin-block-start: var(--space-3);
+  }
+
+  .page h2 {
+    margin-block-start: var(--space-5);
+  }
+
+  .features {
+    padding-inline-start: 1.25em;
+    display: grid;
+    gap: var(--space-2);
+    margin-block-end: var(--space-5);
+  }
+
+  .buy-box {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+
+  .buy-note {
+    margin: 0;
+    color: var(--text-muted);
+    max-width: 38ch;
+  }
+
+  .back {
+    margin-block-start: var(--space-6);
+  }
+</style>

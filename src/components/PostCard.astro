@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { localizePath, splitId, formatDate, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  post: CollectionEntry<'tutorials'>;
+}
+
+const { lang, post } = Astro.props;
+const { slug } = splitId(post.id);
+---
+
+<a class="card" data-tilt href={localizePath(lang, `/tutorials/${slug}`)}>
+  <time class="meta" datetime={post.data.pubDate.toISOString()}>
+    {formatDate(lang, post.data.pubDate)}
+  </time>
+  <h3 class="post-title">{post.data.title}</h3>
+  <p>{post.data.description}</p>
+</a>
+
+<style>
+  .post-title {
+    margin-block-start: var(--space-2);
+  }
+</style>

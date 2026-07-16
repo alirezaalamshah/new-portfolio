@@ -1,0 +1,240 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import { languages, localizePath, type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  lang: Lang;
+  /** Locale-agnostic path of the current page, used by the language switcher. */
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const t = ui[lang];
+
+const links = [
+  { href: '/', label: t.nav.home },
+  { href: '/portfolio', label: t.nav.portfolio },
+  { href: '/products', label: t.nav.products },
+  { href: '/tutorials', label: t.nav.tutorials },
+  { href: '/about', label: t.nav.about },
+  { href: '/contact', label: t.nav.contact },
+];
+
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={localizePath(lang, '/')}>
+      <Image
+        src={logo}
+        height={44}
+        densities={[1, 2]}
+        format="webp"
+        alt={t.site.fullName}
+        loading="eager"
+      />
+    </a>
+
+    <button
+      class="menu-btn"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      aria-label={t.nav.menu}
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+    </button>
+
+    <nav id="site-nav" class="site-nav" aria-label={t.nav.menu}>
+      <ul class="nav-list">
+        {links.map((link) => (
+          <li>
+            <a
+              href={localizePath(lang, link.href)}
+              aria-current={isCurrent(link.href) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="nav-extras">
+        <ul class="lang-list" aria-label={t.nav.switchLang}>
+          {(Object.keys(languages) as Lang[]).map((l) => (
+            <li>
+              <a
+                href={localizePath(l, path)}
+                hreflang={l}
+                lang={l}
+                aria-current={l === lang ? 'true' : undefined}
+              >
+                {languages[l]}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <ThemeToggle label={t.nav.toggleTheme} />
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(10px);
+    border-block-end: 1px solid var(--border);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 4rem;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .brand img {
+    display: block;
+    width: auto;
+    height: 44px;
+  }
+
+  .menu-btn {
+    display: none;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    padding: var(--space-2);
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .nav-list {
+    display: flex;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-list a {
+    color: var(--text-muted);
+    font-weight: 500;
+    padding-block: var(--space-2);
+  }
+
+  .nav-list a:hover {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-list a[aria-current='page'] {
+    color: var(--accent);
+  }
+
+  .nav-extras {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .lang-list {
+    display: flex;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: var(--fs-sm);
+  }
+
+  .lang-list a {
+    color: var(--text-muted);
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 0.05rem 0.6rem;
+  }
+
+  .lang-list a:hover {
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .lang-list a[aria-current='true'] {
+    color: var(--accent);
+    border-color: var(--border);
+  }
+
+  @media (max-width: 52rem) {
+    .menu-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .site-nav {
+      display: none;
+      position: absolute;
+      inset-inline: 0;
+      inset-block-start: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--space-3);
+      background: var(--bg-raised);
+      border-block-end: 1px solid var(--border);
+      padding: var(--space-3) var(--space-3) var(--space-4);
+      box-shadow: var(--shadow);
+    }
+
+    .site-nav.open {
+      display: flex;
+    }
+
+    .nav-list {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .nav-list a {
+      display: block;
+      padding: var(--space-2) 0;
+    }
+
+    .nav-extras {
+      justify-content: space-between;
+    }
+  }
+</style>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+  const nav = document.getElementById('site-nav');
+  btn?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(Boolean(open)));
+  });
+</script>

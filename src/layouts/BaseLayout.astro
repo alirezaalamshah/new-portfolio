@@ -1,0 +1,140 @@
+---
+import '../styles/global.css';
+import { languages, dirFor, localizePath, localeTags, type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { goatcounter } from '../data/site';
+
+interface Props {
+  lang: Lang;
+  /** Page title WITHOUT the site name — the layout appends it. */
+  title: string;
+  description: string;
+  /** Locale-agnostic path, e.g. `/portfolio/telegram-bot`. Used for canonical + hreflang. */
+  path: string;
+  isHome?: boolean;
+  ogType?: 'website' | 'article';
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Skip hreflang alternates — for pages that exist in one language only (e.g. tag pages). */
+  noAlternates?: boolean;
+}
+
+const {
+  lang,
+  title,
+  description,
+  path,
+  isHome = false,
+  ogType = 'website',
+  jsonLd,
+  noAlternates = false,
+} = Astro.props;
+const t = ui[lang];
+
+const site = Astro.site!;
+const canonical = new URL(localizePath(lang, path), site).href;
+const fullTitle = isHome ? `${t.site.fullName} — ${t.site.role}` : `${title} · ${t.site.fullName}`;
+
+const alternates = (Object.keys(languages) as Lang[]).map((l) => ({
+  lang: l,
+  tag: localeTags[l],
+  href: new URL(localizePath(l, path), site).href,
+}));
+
+const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+
+// Social-preview image: pre-flattened 640×382 JPEG in public/, regenerated
+// from src/assets/logo.png via `node -e "...sharp..."` if the logo changes.
+const ogImageUrl = new URL('/og-image.jpg', site).href;
+---
+
+<html lang={localeTags[lang]} dir={dirFor(lang)}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={t.site.fullName} />
+    <link rel="canonical" href={canonical} />
+    {!noAlternates && alternates.map((a) => <link rel="alternate" hreflang={a.tag} href={a.href} />)}
+    {!noAlternates && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={t.site.fullName} />
+    <meta property="og:locale" content={localeTags[lang].replace('-', '_')} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="640" />
+    <meta property="og:image:height" content="382" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/Vazirmatn-Variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script is:inline>
+      (function () {
+        var saved = localStorage.getItem('theme');
+        var theme =
+          saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+
+    {jsonLdBlocks.map((block) => (
+      <script type="application/ld+json" set:html={JSON.stringify(block)} />
+    ))}
+
+    {goatcounter && (
+      <script
+        is:inline
+        async
+        data-goatcounter={`https://${goatcounter}.goatcounter.com/count`}
+        src="https://gc.zgo.at/count.js"
+      />
+    )}
+  </head>
+  <body>
+    <a href="#main" class="skip-link">{t.nav.skipToContent}</a>
+    <Header lang={lang} path={path} />
+    <main id="main" class="container">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+
+    <script>
+      // 3D tilt for [data-tilt] cards — spec in .claude/skills/ui-ux/SKILL.md
+      if (
+        matchMedia('(hover: hover) and (pointer: fine)').matches &&
+        matchMedia('(prefers-reduced-motion: no-preference)').matches
+      ) {
+        const MAX_DEG = 5;
+        for (const el of document.querySelectorAll<HTMLElement>('[data-tilt]')) {
+          el.addEventListener('pointermove', (e) => {
+            const r = el.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width - 0.5;
+            const y = (e.clientY - r.top) / r.height - 0.5;
+            el.style.setProperty('--rx', `${(-y * MAX_DEG).toFixed(2)}deg`);
+            el.style.setProperty('--ry', `${(x * MAX_DEG).toFixed(2)}deg`);
+            el.style.setProperty('--gx', `${((x + 0.5) * 100).toFixed(1)}%`);
+            el.style.setProperty('--gy', `${((y + 0.5) * 100).toFixed(1)}%`);
+          });
+          el.addEventListener('pointerleave', () => {
+            el.style.setProperty('--rx', '0deg');
+            el.style.setProperty('--ry', '0deg');
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

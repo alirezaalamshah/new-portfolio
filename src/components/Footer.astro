@@ -1,0 +1,85 @@
+---
+import { localizePath, type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const year = new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US', { useGrouping: false }).format(
+  new Date().getFullYear()
+);
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <p class="footer-name">{t.site.fullName}</p>
+      <p class="footer-tagline">{t.footer.tagline}</p>
+    </div>
+    <nav aria-label={t.nav.menu}>
+      <ul class="footer-nav">
+        <li><a href={localizePath(lang, '/portfolio')}>{t.nav.portfolio}</a></li>
+        <li><a href={localizePath(lang, '/products')}>{t.nav.products}</a></li>
+        <li><a href={localizePath(lang, '/tutorials')}>{t.nav.tutorials}</a></li>
+        <li><a href={localizePath(lang, '/contact')}>{t.nav.contact}</a></li>
+        <li><a href={localizePath(lang, '/rss.xml').replace(/\/$/, '')}>{t.footer.rss}</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="container">
+    <p class="footer-rights">© {year} {t.site.fullName} — {t.footer.rights}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-block-start: 1px solid var(--border);
+    margin-block-start: var(--space-8);
+    padding-block: var(--space-5) var(--space-4);
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-block-end: var(--space-4);
+  }
+
+  .footer-name {
+    color: var(--text);
+    font-weight: 700;
+    margin-block-end: var(--space-1);
+  }
+
+  .footer-tagline {
+    margin: 0;
+    max-width: 32ch;
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-nav a {
+    color: var(--text-muted);
+  }
+
+  .footer-nav a:hover {
+    color: var(--text);
+  }
+
+  .footer-rights {
+    margin: 0;
+  }
+</style>

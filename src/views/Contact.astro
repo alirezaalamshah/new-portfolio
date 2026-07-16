@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import IsoBadge from '../components/IsoBadge.astro';
+import { type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { contact } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<BaseLayout lang={lang} title={t.contact.title} description={t.contact.metaDescription} path="/contact">
+  <section class="page">
+    <header class="page-head">
+      <div class="head-copy">
+        <h1>{t.contact.title}</h1>
+        <p class="lede">{t.contact.intro}</p>
+      </div>
+      <IsoBadge variant="contact" />
+    </header>
+
+    <div class="contact-card">
+      <h2>{t.contact.emailLabel}</h2>
+      <p><a class="email" href={`mailto:${contact.email}`}>{contact.email}</a></p>
+      <p class="meta">{t.contact.responseNote}</p>
+    </div>
+
+    <div class="contact-card">
+      <h2>{t.contact.socialsLabel}</h2>
+      <ul class="socials">
+        {contact.socials.map((social) => (
+          <li>
+            <a class="btn btn-secondary" href={social.url} rel="me noopener">{social.label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block-start: var(--space-6);
+    max-width: var(--measure);
+  }
+
+  .lede {
+    color: var(--text-muted);
+    margin-block-end: var(--space-5);
+  }
+
+  .contact-card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+    margin-block-end: var(--space-4);
+  }
+
+  .contact-card h2 {
+    font-size: var(--fs-md);
+    margin-block-end: var(--space-3);
+  }
+
+  .email {
+    font-size: var(--fs-md);
+    font-weight: 600;
+    direction: ltr;
+    unicode-bidi: embed;
+  }
+
+  .socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+</style>

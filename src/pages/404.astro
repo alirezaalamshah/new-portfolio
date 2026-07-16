@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { localizePath } from '../i18n';
+import { ui } from '../i18n/ui';
+
+const t = ui.fa;
+---
+
+<BaseLayout lang="fa" title={t.notFound.title} description={t.notFound.text} path="/404">
+  <section class="not-found">
+    <p class="code" aria-hidden="true">404</p>
+    <h1>{t.notFound.title}</h1>
+    <p>{t.notFound.text}</p>
+    <p class="alt" lang="en" dir="ltr">{ui.en.notFound.title} — {ui.en.notFound.text}</p>
+    <div class="actions">
+      <a class="btn btn-primary" href={localizePath('fa', '/')}>{t.notFound.backHome}</a>
+      <a class="btn btn-secondary" href={localizePath('en', '/')} lang="en">English home</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding-block: var(--space-8);
+    text-align: center;
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+
+  .code {
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    color: var(--accent);
+    margin-block-end: var(--space-2);
+  }
+
+  .alt {
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block-start: var(--space-4);
+  }
+</style>

@@ -1,0 +1,146 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render, getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { localizePath, splitId, formatDate, localeTags, type Lang } from '../i18n';
+import { ui } from '../i18n/ui';
+import { breadcrumbJsonLd } from '../lib/seo';
+import { slugifyTag } from '../lib/tags';
+
+interface Props {
+  lang: Lang;
+  post: CollectionEntry<'tutorials'>;
+}
+
+const { lang, post } = Astro.props;
+const t = ui[lang];
+const { slug } = splitId(post.id);
+const { Content } = await render(post);
+
+// Related tutorials: same language, sharing at least one tag.
+const others = await getCollection(
+  'tutorials',
+  (e) => e.id.startsWith(`${lang}/`) && !e.data.draft && e.id !== post.id
+);
+const related = others
+  .map((p) => ({ p, score: p.data.tags.filter((tag) => post.data.tags.includes(tag)).length }))
+  .filter((x) => x.score > 0)
+  .sort((a, b) => b.score - a.score || b.p.data.pubDate.valueOf() - a.p.data.pubDate.valueOf())
+  .slice(0, 3)
+  .map((x) => x.p);
+
+const path = `/tutorials/${slug}`;
+const jsonLd = [
+  breadcrumbJsonLd(Astro.site!, lang, [
+    { name: t.nav.home, path: '/' },
+    { name: t.tutorials.title, path: '/tutorials' },
+    { name: post.data.title, path },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.pubDate.toISOString(),
+    inLanguage: localeTags[lang],
+    author: { '@type': 'Person', name: t.site.fullName, url: Astro.site!.href },
+  },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={post.data.title}
+  description={post.data.description}
+  path={path}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <article class="page" data-pagefind-body>
+    <header class="page-header">
+      <h1>{post.data.title}</h1>
+      <p class="meta">
+        {t.tutorials.publishedOn}
+        <time datetime={post.data.pubDate.toISOString()}>{formatDate(lang, post.data.pubDate)}</time>
+      </p>
+      {post.data.tags.length > 0 && (
+        <ul class="tags">
+          {post.data.tags.map((tag) => (
+            <li>
+              <a class="tag" href={localizePath(lang, `/tutorials/tag/${slugifyTag(tag)}`)}>{tag}</a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </header>
+
+    <div class="prose" data-copy={t.tutorials.copy} data-copied={t.tutorials.copied}>
+      <Content />
+    </div>
+
+    {related.length > 0 && (
+      <section class="related" data-pagefind-ignore>
+        <h2>{t.tutorials.related}</h2>
+        <div class="grid">
+          {related.map((rel) => <PostCard lang={lang} post={rel} />)}
+        </div>
+      </section>
+    )}
+
+    <p class="back">
+      <a href={localizePath(lang, '/tutorials')}>
+        <span class="flip-rtl" aria-hidden="true">←</span>
+        {t.tutorials.backToList}
+      </a>
+    </p>
+  </article>
+</BaseLayout>
+
+<script>
+  // Copy buttons on code blocks
+  const prose = document.querySelector<HTMLElement>('.prose');
+  const label = prose?.dataset.copy ?? 'Copy';
+  const done = prose?.dataset.copied ?? '✓';
+  for (const pre of document.querySelectorAll('.prose pre')) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'code-copy';
+    btn.textContent = label;
+    btn.addEventListener('click', async () => {
+      const code = pre.querySelector('code');
+      await navigator.clipboard.writeText(code?.innerText ?? '');
+      btn.textContent = done;
+      setTimeout(() => (btn.textContent = label), 2000);
+    });
+    pre.appendChild(btn);
+  }
+</script>
+
+<style>
+  .page {
+    padding-block-start: var(--space-6);
+    max-width: var(--measure);
+  }
+
+  .page-header {
+    margin-block-end: var(--space-5);
+    padding-block-end: var(--space-4);
+    border-block-end: 1px solid var(--border);
+  }
+
+  .back {
+    margin-block-start: var(--space-6);
+  }
+
+  .related {
+    margin-block-start: var(--space-6);
+    padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--border);
+  }
+
+  .related h2 {
+    font-size: var(--fs-lg);
+    margin-block-end: var(--space-4);
+  }
+</style>
