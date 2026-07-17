@@ -64,6 +64,7 @@ export interface UIDict {
     intro: string;
     kindSoftware: string;
     kindCourse: string;
+    comingSoon: string;
     featuresTitle: string;
     buyCta: string;
     buyNote: string;
@@ -180,6 +181,7 @@ export const ui: Record<Lang, UIDict> = {
       intro: 'نرم‌افزارها و پکیج‌های آموزشی که آماده کرده‌ام.',
       kindSoftware: 'نرم‌افزار',
       kindCourse: 'پکیج آموزشی',
+      comingSoon: 'به‌زودی',
       featuresTitle: 'امکانات',
       buyCta: 'استعلام خرید',
       buyNote: 'فروش آنلاین به‌زودی فعال می‌شود؛ فعلاً برای خرید از صفحه تماس پیام بدهید.',
@@ -296,6 +298,7 @@ export const ui: Record<Lang, UIDict> = {
       intro: 'Software and course packages I have prepared.',
       kindSoftware: 'Software',
       kindCourse: 'Course package',
+      comingSoon: 'Coming soon',
       featuresTitle: 'Features',
       buyCta: 'Ask about purchasing',
       buyNote: 'Online checkout is coming soon; for now, message me via the contact page to buy.',
@@ -413,6 +416,7 @@ export const ui: Record<Lang, UIDict> = {
       intro: 'Software und Kurspakete, die ich vorbereitet habe.',
       kindSoftware: 'Software',
       kindCourse: 'Kurspaket',
+      comingSoon: 'Bald verfügbar',
       featuresTitle: 'Funktionen',
       buyCta: 'Kaufanfrage stellen',
       buyNote: 'Der Online-Kauf ist bald verfügbar; schreiben Sie mir vorerst über die Kontaktseite.',

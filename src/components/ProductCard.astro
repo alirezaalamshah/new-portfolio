@@ -16,6 +16,7 @@ const kindLabel = product.data.kind === 'software' ? t.products.kindSoftware : t
 
 <a class="card" data-tilt href={localizePath(lang, `/products/${slug}`)}>
   <span class="tag">{kindLabel}</span>
+  {product.data.status === 'coming-soon' && <span class="tag soon">{t.products.comingSoon}</span>}
   <h3 class="product-title">{product.data.title}</h3>
   <p>{product.data.description}</p>
 </a>
@@ -23,5 +24,11 @@ const kindLabel = product.data.kind === 'software' ? t.products.kindSoftware : t
 <style>
   .product-title {
     margin-block-start: var(--space-3);
+  }
+
+  .soon {
+    color: var(--accent-warm);
+    border-color: color-mix(in srgb, var(--accent-warm) 45%, transparent);
+    margin-inline-start: var(--space-1);
   }
 </style>

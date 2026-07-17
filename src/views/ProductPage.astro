@@ -46,6 +46,7 @@ const jsonLd = [
   <article class="page">
     <header class="page-header">
       <span class="tag">{kindLabel}</span>
+      {product.data.status === 'coming-soon' && <span class="tag soon">{t.products.comingSoon}</span>}
       <h1 class="product-title">{product.data.title}</h1>
       <p class="meta">{product.data.description}</p>
     </header>
@@ -85,6 +86,12 @@ const jsonLd = [
 
   .product-title {
     margin-block-start: var(--space-3);
+  }
+
+  .soon {
+    color: var(--accent-warm);
+    border-color: color-mix(in srgb, var(--accent-warm) 45%, transparent);
+    margin-inline-start: var(--space-1);
   }
 
   .page h2 {

@@ -26,6 +26,7 @@ const products = defineCollection({
     title: z.string(),
     description: z.string().max(160),
     kind: z.enum(['software', 'course']),
+    status: z.enum(['available', 'coming-soon']).default('available'),
     features: z.array(z.string()),
     order: z.number().default(99),
   }),
