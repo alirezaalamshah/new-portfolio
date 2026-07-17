@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import IsoBadge from '../components/IsoBadge.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 import { type Lang } from '../i18n';
 import { ui } from '../i18n/ui';
 import { contact } from '../data/site';
@@ -23,21 +24,29 @@ const t = ui[lang];
       <IsoBadge variant="contact" />
     </header>
 
-    <div class="contact-card">
-      <h2>{t.contact.emailLabel}</h2>
-      <p><a class="email" href={`mailto:${contact.email}`}>{contact.email}</a></p>
-      <p class="meta">{t.contact.responseNote}</p>
-    </div>
+    <div class="contact-grid">
+      <a class="contact-card email-card" href={`mailto:${contact.email}`}>
+        <span class="card-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="5" width="18" height="14" rx="3" stroke="currentColor" stroke-width="2" />
+            <path d="m4.5 7.5 6.42 4.81a1.8 1.8 0 0 0 2.16 0l6.42-4.8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </span>
+        <h2>{t.contact.emailLabel}</h2>
+        <p class="email">{contact.email}</p>
+        <p class="meta">{t.contact.responseNote}</p>
+      </a>
 
-    <div class="contact-card">
-      <h2>{t.contact.socialsLabel}</h2>
-      <ul class="socials">
-        {contact.socials.map((social) => (
-          <li>
-            <a class="btn btn-secondary" href={social.url} rel="me noopener">{social.label}</a>
-          </li>
-        ))}
-      </ul>
+      <div class="contact-card">
+        <span class="card-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
+            <path d="M3.6 9h16.8M3.6 15h16.8M12 3a15.4 15.4 0 0 1 0 18M12 3a15.4 15.4 0 0 0 0 18" stroke="currentColor" stroke-width="2" />
+          </svg>
+        </span>
+        <h2>{t.contact.socialsLabel}</h2>
+        <SocialLinks variant="buttons" />
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -45,40 +54,72 @@ const t = ui[lang];
 <style>
   .page {
     padding-block-start: var(--space-6);
-    max-width: var(--measure);
   }
 
   .lede {
     color: var(--text-muted);
-    margin-block-end: var(--space-5);
+    max-width: var(--measure);
+    margin-block-end: 0;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+    gap: var(--space-4);
+    margin-block-start: var(--space-5);
   }
 
   .contact-card {
+    display: block;
     background: var(--bg-raised);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: var(--space-4);
-    margin-block-end: var(--space-4);
+    padding: var(--space-5);
+    color: var(--text);
+    box-shadow: var(--shadow);
+  }
+
+  a.contact-card {
+    transition: border-color 150ms ease-out;
+  }
+
+  a.contact-card:hover {
+    border-color: var(--accent);
+    text-decoration: none;
+  }
+
+  .card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    margin-block-end: var(--space-3);
   }
 
   .contact-card h2 {
     font-size: var(--fs-md);
-    margin-block-end: var(--space-3);
+    margin-block-end: var(--space-2);
   }
 
   .email {
     font-size: var(--fs-md);
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--accent);
     direction: ltr;
-    unicode-bidi: embed;
+    unicode-bidi: isolate;
+    margin-block-end: var(--space-2);
+    overflow-wrap: anywhere;
   }
 
-  .socials {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    list-style: none;
+  :global([dir='rtl']) .email {
+    text-align: right;
+  }
+
+  .contact-card .meta {
     margin: 0;
-    padding: 0;
   }
 </style>

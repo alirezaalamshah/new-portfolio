@@ -1,6 +1,8 @@
 ---
 import { localizePath, type Lang } from '../i18n';
 import { ui } from '../i18n/ui';
+import { contact } from '../data/site';
+import SocialLinks from './SocialLinks.astro';
 
 interface Props {
   lang: Lang;
@@ -14,21 +16,29 @@ const year = new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US', { useGroup
 ---
 
 <footer class="site-footer">
-  <div class="container footer-inner">
-    <div>
+  <div class="container footer-grid">
+    <div class="footer-brand">
       <p class="footer-name">{t.site.fullName}</p>
       <p class="footer-tagline">{t.footer.tagline}</p>
+      <a class="footer-email" href={`mailto:${contact.email}`}>{contact.email}</a>
     </div>
+
     <nav aria-label={t.nav.menu}>
       <ul class="footer-nav">
         <li><a href={localizePath(lang, '/portfolio')}>{t.nav.portfolio}</a></li>
         <li><a href={localizePath(lang, '/products')}>{t.nav.products}</a></li>
         <li><a href={localizePath(lang, '/tutorials')}>{t.nav.tutorials}</a></li>
+        <li><a href={localizePath(lang, '/about')}>{t.nav.about}</a></li>
         <li><a href={localizePath(lang, '/contact')}>{t.nav.contact}</a></li>
         <li><a href={localizePath(lang, '/rss.xml').replace(/\/$/, '')}>{t.footer.rss}</a></li>
       </ul>
     </nav>
+
+    <div class="footer-social">
+      <SocialLinks variant="icons" />
+    </div>
   </div>
+
   <div class="container">
     <p class="footer-rights">© {year} {t.site.fullName} — {t.footer.rights}</p>
   </div>
@@ -38,34 +48,47 @@ const year = new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US', { useGroup
   .site-footer {
     border-block-start: 1px solid var(--border);
     margin-block-start: var(--space-8);
-    padding-block: var(--space-5) var(--space-4);
+    padding-block: var(--space-6) var(--space-4);
     color: var(--text-muted);
     font-size: var(--fs-sm);
   }
 
-  .footer-inner {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: var(--space-4);
-    margin-block-end: var(--space-4);
+  .footer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+    gap: var(--space-5);
+    align-items: start;
+    margin-block-end: var(--space-5);
   }
 
   .footer-name {
     color: var(--text);
     font-weight: 700;
+    font-size: var(--fs-base);
     margin-block-end: var(--space-1);
   }
 
   .footer-tagline {
-    margin: 0;
-    max-width: 32ch;
+    margin-block-end: var(--space-2);
+    max-width: 34ch;
+  }
+
+  .footer-email {
+    color: var(--text-muted);
+    direction: ltr;
+    unicode-bidi: isolate;
+    display: inline-block;
+  }
+
+  .footer-email:hover {
+    color: var(--accent);
   }
 
   .footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: start;
+    gap: var(--space-2) var(--space-4);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -73,6 +96,8 @@ const year = new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US', { useGroup
 
   .footer-nav a {
     color: var(--text-muted);
+    display: inline-block;
+    padding-block: 0.15rem;
   }
 
   .footer-nav a:hover {
@@ -81,5 +106,24 @@ const year = new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US', { useGroup
 
   .footer-rights {
     margin: 0;
+    padding-block-start: var(--space-4);
+    border-block-start: 1px solid var(--border);
+  }
+
+  @media (max-width: 44rem) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      text-align: center;
+      justify-items: center;
+    }
+
+    .footer-nav {
+      justify-content: center;
+    }
+
+    .footer-rights {
+      text-align: center;
+    }
   }
 </style>
