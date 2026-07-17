@@ -7,11 +7,11 @@ export const goatcounter = '';
 
 /** Central contact info — edit once, used everywhere. */
 export const contact = {
-  email: 'Ali.Heev.clu@gmail.com',
+  email: 'info@alirezaalamshah.ir',
   // TODO: آدرس‌های واقعی شبکه‌های اجتماعی خودت را بگذار
   socials: [
-    { label: 'GitHub', url: 'https://github.com/USERNAME' },
-    { label: 'Telegram', url: 'https://t.me/USERNAME' },
-    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/USERNAME' },
+    { label: 'GitHub', url: 'https://github.com/alirezaalamshah/' },
+    { label: 'Telegram', url: 'https://t.me/alirezaalamsha' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/ali-alamshah/' },
   ],
 };
