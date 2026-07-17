@@ -12,6 +12,7 @@ tags: [CSS, طراحی وب]
 هیچ رنگی را مستقیم در کامپوننت‌ها ننویسید؛ همه را به متغیر تبدیل کنید:
 
 ```css
+
 :root {
   --bg: #0b0e14;
   --text: #e6e9f0;
@@ -28,6 +29,7 @@ tags: [CSS, طراحی وب]
 در اولین بازدید، از ترجیح سیستم‌عامل کاربر پیروی کنید:
 
 ```js
+
 const saved = localStorage.getItem('theme');
 const theme = saved ||
   (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
@@ -39,6 +41,7 @@ document.documentElement.dataset.theme = theme;
 ## قدم سوم: دکمه تغییر تم
 
 ```js
+
 button.addEventListener('click', () => {
   const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
   root.dataset.theme = next;

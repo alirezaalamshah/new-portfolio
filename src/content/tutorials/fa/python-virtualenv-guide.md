@@ -14,18 +14,21 @@ tags: [پایتون, ابزار]
 ## ساخت محیط مجازی با venv
 
 ```bash
+
 python -m venv .venv
 ```
 
 فعال‌سازی در ویندوز:
 
 ```bash
+
 .venv\Scripts\activate
 ```
 
 و در لینوکس و مک:
 
 ```bash
+
 source .venv/bin/activate
 ```
 

@@ -14,18 +14,21 @@ Eine virtuelle Umgebung ist ein isolierter Ordner, der die Python-Version und di
 ## Anlegen mit venv
 
 ```bash
+
 python -m venv .venv
 ```
 
 Aktivieren unter Windows:
 
 ```bash
+
 .venv\Scripts\activate
 ```
 
 Und unter Linux oder macOS:
 
 ```bash
+
 source .venv/bin/activate
 ```
 

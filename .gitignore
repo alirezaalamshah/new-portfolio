@@ -4,3 +4,7 @@ dist/
 npm-debug.log*
 .env
 .env.*
+
+# personal files kept out of the public repo
+/ali resume.pdf
+/certificate-*.jpg

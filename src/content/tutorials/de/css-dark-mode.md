@@ -12,6 +12,7 @@ Dark Mode ist längst kein Luxus mehr; Nutzer erwarten ihn. Die gute Nachricht: 
 Schreiben Sie niemals eine Farbe direkt in Komponenten; machen Sie alles zur Variable:
 
 ```css
+
 :root {
   --bg: #0b0e14;
   --text: #e6e9f0;
@@ -28,6 +29,7 @@ Schreiben Sie niemals eine Farbe direkt in Komponenten; machen Sie alles zur Var
 Folgen Sie beim ersten Besuch der Einstellung des Betriebssystems:
 
 ```js
+
 const saved = localStorage.getItem('theme');
 const theme = saved ||
   (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
@@ -39,6 +41,7 @@ Dieses Skript muss **im head, vor dem Rendern** laufen, damit die Seite nie mit 
 ## Schritt drei: der Umschalt-Button
 
 ```js
+
 button.addEventListener('click', () => {
   const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
   root.dataset.theme = next;

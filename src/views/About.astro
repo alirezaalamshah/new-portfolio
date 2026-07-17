@@ -4,6 +4,14 @@ import IsoBadge from '../components/IsoBadge.astro';
 import { type Lang } from '../i18n';
 import { ui } from '../i18n/ui';
 import { contact } from '../data/site';
+import {
+  experience,
+  education,
+  spokenLanguages,
+  certificates,
+  certIssuer,
+  certVerifyUrl,
+} from '../data/resume';
 
 interface Props {
   lang: Lang;
@@ -11,6 +19,9 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = ui[lang];
+const jobs = experience[lang];
+const schools = education[lang];
+const langs = spokenLanguages[lang];
 
 const personJsonLd = {
   '@context': 'https://schema.org',
@@ -20,6 +31,12 @@ const personJsonLd = {
   url: Astro.site!.href,
   email: `mailto:${contact.email}`,
   sameAs: contact.socials.map((s) => s.url),
+  hasCredential: certificates.map((cert) => ({
+    '@type': 'EducationalOccupationalCredential',
+    name: cert.title[lang],
+    credentialCategory: 'certificate',
+    recognizedBy: { '@type': 'Organization', name: certIssuer[lang], url: 'https://mftplus.com' },
+  })),
 };
 ---
 
@@ -37,19 +54,99 @@ const personJsonLd = {
         <div class="prose">
           {t.about.intro.map((paragraph) => <p>{paragraph}</p>)}
         </div>
+        <p class="print-contact">
+          {t.site.fullName} — {t.site.role}
+          <br />
+          {contact.email} · alirezaalamshah.ir · linkedin.com/in/ali-alamshah
+        </p>
+        <p class="cv-action">
+          <button class="btn btn-primary print-btn" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v10m0 0 4-4m-4 4-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            {t.about.printCta}
+          </button>
+        </p>
       </div>
       <IsoBadge variant="about" />
     </header>
 
-    <h2>{t.about.skillsTitle}</h2>
-    <div class="grid">
-      {t.about.skillGroups.map((group) => (
-        <div class="card">
-          <h3>{group.title}</h3>
-          <p>{group.items}</p>
-        </div>
-      ))}
-    </div>
+    <section class="section" aria-labelledby="skills-h">
+      <div class="section-head"><h2 id="skills-h">{t.about.skillsTitle}</h2></div>
+      <div class="grid">
+        {t.about.skillGroups.map((group) => (
+          <div class="card">
+            <h3>{group.title}</h3>
+            <p>{group.items}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="exp-h">
+      <div class="section-head"><h2 id="exp-h">{t.about.experienceTitle}</h2></div>
+      <ol class="timeline">
+        {jobs.map((job) => (
+          <li class="timeline-item">
+            <div class="timeline-head">
+              <h3>{job.role}</h3>
+              <span class="meta">{job.period}</span>
+            </div>
+            <p class="company">{job.company}</p>
+            {job.points.length > 0 && (
+              <ul class="points">
+                {job.points.map((point) => <li>{point}</li>)}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="section two-col" aria-label={`${t.about.educationTitle} / ${t.about.languagesTitle}`}>
+      <div>
+        <div class="section-head"><h2>{t.about.educationTitle}</h2></div>
+        <ul class="plain-list">
+          {schools.map((entry) => (
+            <li>
+              <strong>{entry.title}</strong>
+              <span class="meta">{entry.place} · {entry.period}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <div class="section-head"><h2>{t.about.languagesTitle}</h2></div>
+        <ul class="plain-list">
+          {langs.map((entry) => (
+            <li>
+              <strong>{entry.name}</strong>
+              <span class="meta">{entry.level}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="cert-h">
+      <div class="section-head"><h2 id="cert-h">{t.about.certificatesTitle}</h2></div>
+      <div class="grid">
+        {certificates.map((cert) => (
+          <div class="card cert-card">
+            <h3>{cert.title[lang]}</h3>
+            <p class="issuer">{certIssuer[lang]} · {cert.year}</p>
+            <p class="cert-meta meta">
+              {cert.hours} {t.about.certHoursUnit} · {t.about.certScoreLabel}: {cert.score}/100
+            </p>
+            <p class="cert-meta meta">
+              {t.about.certNoLabel}: <span class="cert-no">{cert.certNo}</span>
+            </p>
+            <a class="verify" href={certVerifyUrl} rel="noopener">{t.about.certVerifyCta} ↗</a>
+          </div>
+        ))}
+      </div>
+    </section>
   </article>
 </BaseLayout>
 
@@ -58,7 +155,159 @@ const personJsonLd = {
     padding-block-start: var(--space-6);
   }
 
-  .page h2 {
-    margin-block: var(--space-6) var(--space-4);
+  .cv-action {
+    margin-block-start: var(--space-4);
+  }
+
+  .print-btn {
+    gap: var(--space-2);
+  }
+
+  /* shown only in the printed résumé */
+  .print-contact {
+    display: none;
+  }
+
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-inline-start: 2px solid var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-inline-start: var(--space-4);
+    padding-block-end: var(--space-4);
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: -7px;
+    inset-block-start: 0.45em;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+  }
+
+  .timeline-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  .timeline-head h3 {
+    margin: 0;
+    font-size: var(--fs-base);
+    font-weight: 700;
+  }
+
+  .company {
+    color: var(--accent);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    margin-block: var(--space-1) var(--space-2);
+  }
+
+  .points {
+    margin: 0;
+    padding-inline-start: 1.1em;
+    color: var(--text-muted);
+    font-size: var(--fs-sm);
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+    gap: var(--space-5);
+  }
+
+  .plain-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .plain-list strong {
+    display: block;
+  }
+
+  .plain-list .meta {
+    display: block;
+  }
+
+  .cert-card .issuer {
+    color: var(--accent);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    margin-block-end: var(--space-2);
+  }
+
+  .cert-meta {
+    margin-block-end: var(--space-1);
+  }
+
+  .cert-no {
+    font-family: var(--font-mono);
+    direction: ltr;
+    unicode-bidi: isolate;
+  }
+
+  .verify {
+    display: inline-block;
+    margin-block-start: var(--space-2);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+
+  /* ── printed résumé ── */
+  @media print {
+    .page {
+      padding-block-start: 0;
+    }
+
+    .print-contact {
+      display: block;
+      font-weight: 600;
+      margin-block: var(--space-2) 0;
+    }
+
+    .cv-action,
+    .verify {
+      display: none;
+    }
+
+    .section {
+      margin-block-end: 1.2rem;
+      break-inside: avoid-page;
+    }
+
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+
+    .card {
+      box-shadow: none;
+      padding: 0.7rem 0.9rem;
+    }
+
+    .timeline-item {
+      padding-block-end: 0.8rem;
+      break-inside: avoid;
+    }
   }
 </style>
+
+<script>
+  document.querySelector('.print-btn')?.addEventListener('click', () => window.print());
+</script>

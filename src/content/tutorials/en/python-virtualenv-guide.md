@@ -14,18 +14,21 @@ A virtual environment is an isolated folder that keeps each project's Python ver
 ## Creating one with venv
 
 ```bash
+
 python -m venv .venv
 ```
 
 Activate it on Windows:
 
 ```bash
+
 .venv\Scripts\activate
 ```
 
 And on Linux or macOS:
 
 ```bash
+
 source .venv/bin/activate
 ```
 

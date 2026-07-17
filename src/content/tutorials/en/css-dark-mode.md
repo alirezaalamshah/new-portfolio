@@ -12,6 +12,7 @@ Dark mode is no longer a luxury; users expect it. The good news: you don't need 
 Never write a color directly in components; make everything a variable:
 
 ```css
+
 :root {
   --bg: #0b0e14;
   --text: #e6e9f0;
@@ -28,6 +29,7 @@ Never write a color directly in components; make everything a variable:
 On the first visit, follow the user's operating-system preference:
 
 ```js
+
 const saved = localStorage.getItem('theme');
 const theme = saved ||
   (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
@@ -39,6 +41,7 @@ This script must run **inside head, before render**, so the page never flashes t
 ## Step three: the toggle button
 
 ```js
+
 button.addEventListener('click', () => {
   const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
   root.dataset.theme = next;

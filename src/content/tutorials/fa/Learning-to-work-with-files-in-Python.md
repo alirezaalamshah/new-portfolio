@@ -14,6 +14,7 @@ tags: [پایتون, برنامه‌نویسی]
 برای نوشتن در یک فایل جدید:
 
 ```python
+
 with open("note.txt", "w", encoding="utf-8") as file:
     file.write("سلام پایتون!")
 ```
@@ -21,6 +22,7 @@ with open("note.txt", "w", encoding="utf-8") as file:
 برای خواندن اطلاعات از همان فایل:
 
 ```python
+
 with open("note.txt", "r", encoding="utf-8") as file:
     content = file.read()
     print(content)

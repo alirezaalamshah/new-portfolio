@@ -368,3 +368,44 @@ a.card:hover {
     scroll-behavior: auto;
   }
 }
+
+/* ── print: strip site chrome, compact ink-friendly layout ── */
+@media print {
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .iso-badge {
+    display: none !important;
+  }
+
+  body {
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+
+  .container {
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  main {
+    margin: 0;
+  }
+
+  h1 {
+    font-size: 20pt;
+  }
+
+  h2 {
+    font-size: 14pt;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .section-head h2::before {
+    color: #333;
+  }
+}

@@ -41,6 +41,24 @@
   --font-mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
 }
 
+/* Print always uses a light, ink-friendly palette regardless of theme */
+@media print {
+  :root,
+  :root[data-theme='dark'] {
+    --bg: #ffffff;
+    --bg-raised: #ffffff;
+    --text: #111111;
+    --text-muted: #444444;
+    --accent: #333333;
+    --on-accent: #ffffff;
+    --accent-warm: #555555;
+    --border: #bbbbbb;
+    --shadow: none;
+
+    color-scheme: light;
+  }
+}
+
 :root[data-theme='light'] {
   --bg: #fafaf8;
   --bg-raised: #ffffff;

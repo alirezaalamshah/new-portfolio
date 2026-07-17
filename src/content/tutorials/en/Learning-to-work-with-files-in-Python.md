@@ -16,6 +16,7 @@ When you open a file using the `open` function, you must eventually close it. If
 To write to a new file:
 
 ```python
+
 with open("note.txt", "w", encoding="utf-8") as file:
     file.write("Hello Python!")
 ```
@@ -23,6 +24,7 @@ with open("note.txt", "w", encoding="utf-8") as file:
 To read data from the same file:
 
 ```python
+
 with open("note.txt", "r", encoding="utf-8") as file:
     content = file.read()
     print(content)

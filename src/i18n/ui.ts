@@ -37,6 +37,15 @@ export interface UIDict {
     intro: string[];
     skillsTitle: string;
     skillGroups: { title: string; items: string }[];
+    experienceTitle: string;
+    educationTitle: string;
+    languagesTitle: string;
+    certificatesTitle: string;
+    certHoursUnit: string;
+    certScoreLabel: string;
+    certNoLabel: string;
+    certVerifyCta: string;
+    printCta: string;
   };
   portfolio: {
     title: string;
@@ -132,15 +141,25 @@ export const ui: Record<Lang, UIDict> = {
       metaDescription:
         'آشنایی با علیرضا عالمشاه — توسعه‌دهنده پایتون و طراح وب؛ مهارت‌ها، تجربه‌ها و مسیر حرفه‌ای.',
       intro: [
-        'من علیرضا عالمشاه هستم؛ توسعه‌دهنده پایتون و طراح وب. علاقه اصلی من ساختن ابزارهایی است که کار آدم‌ها را ساده‌تر می‌کنند — از اسکریپت‌های اتوماسیون تا وب‌سایت‌های کامل.',
+        'من علیرضا عالمشاه هستم؛ متخصص IT با بیش از ۱۳ سال سابقه در برنامه‌نویسی، مدیریت محصول و راهبری تیم‌های فنی. علاقه اصلی من ساختن ابزارهایی است که کار آدم‌ها را ساده‌تر می‌کنند — از اسکریپت‌های اتوماسیون خط تولید تا وب‌اپلیکیشن‌های کامل.',
         'در کنار توسعه نرم‌افزار، تجربه‌ام را در قالب آموزش‌های رایگان و پکیج‌های آموزشی به اشتراک می‌گذارم تا مسیر یادگیری برای دیگران کوتاه‌تر شود.',
       ],
       skillsTitle: 'مهارت‌ها',
       skillGroups: [
-        { title: 'پایتون', items: 'اتوماسیون، اسکریپت‌نویسی، ربات تلگرام، وب‌اسکرپینگ' },
-        { title: 'وب', items: 'HTML و CSS، جاوااسکریپت، طراحی واکنش‌گرا، سئو' },
-        { title: 'ابزارها', items: 'Git و GitHub، لینوکس، VS Code' },
+        { title: 'زبان‌ها', items: 'Python، JavaScript و TypeScript، T-SQL، HTML و CSS' },
+        { title: 'فریم‌ورک‌ها', items: 'Django، Flask، FastAPI، React، Node.js، وردپرس' },
+        { title: 'داده و هوش مصنوعی', items: 'Power BI، pandas، NumPy، Scikit-Learn، OpenCV، Selenium' },
+        { title: 'پایگاه داده و ابزار', items: 'MySQL، MongoDB، SQLite، لینوکس، Git' },
       ],
+      experienceTitle: 'سابقه کاری',
+      educationTitle: 'تحصیلات',
+      languagesTitle: 'زبان‌ها',
+      certificatesTitle: 'گواهینامه‌ها',
+      certHoursUnit: 'ساعت',
+      certScoreLabel: 'نمره',
+      certNoLabel: 'شماره گواهی',
+      certVerifyCta: 'استعلام گواهینامه',
+      printCta: 'دریافت رزومه (PDF)',
     },
     portfolio: {
       title: 'نمونه‌کارها',
@@ -238,15 +257,25 @@ export const ui: Record<Lang, UIDict> = {
       metaDescription:
         'Meet Alireza Alamshah — Python developer and web designer; skills, experience, and career path.',
       intro: [
-        "I'm Alireza Alamshah, a Python developer and web designer. What I enjoy most is building tools that make people's work easier — from automation scripts to complete websites.",
+        "I'm Alireza Alamshah, an IT professional with 13+ years of experience in programming, product management, and leading technical teams. What I enjoy most is building tools that make people's work easier — from production-line automation scripts to complete web applications.",
         'Alongside software development, I share my experience through free tutorials and course packages to shorten the learning path for others.',
       ],
       skillsTitle: 'Skills',
       skillGroups: [
-        { title: 'Python', items: 'Automation, scripting, Telegram bots, web scraping' },
-        { title: 'Web', items: 'HTML & CSS, JavaScript, responsive design, SEO' },
-        { title: 'Tools', items: 'Git & GitHub, Linux, VS Code' },
+        { title: 'Languages', items: 'Python, JavaScript & TypeScript, T-SQL, HTML & CSS' },
+        { title: 'Frameworks', items: 'Django, Flask, FastAPI, React, Node.js, WordPress' },
+        { title: 'Data & AI', items: 'Power BI, pandas, NumPy, Scikit-Learn, OpenCV, Selenium' },
+        { title: 'Databases & tools', items: 'MySQL, MongoDB, SQLite, Linux, Git' },
       ],
+      experienceTitle: 'Experience',
+      educationTitle: 'Education',
+      languagesTitle: 'Languages',
+      certificatesTitle: 'Certificates',
+      certHoursUnit: 'hrs',
+      certScoreLabel: 'Score',
+      certNoLabel: 'Certificate No.',
+      certVerifyCta: 'Verify certificate',
+      printCta: 'Download résumé (PDF)',
     },
     portfolio: {
       title: 'Portfolio',
@@ -345,15 +374,25 @@ export const ui: Record<Lang, UIDict> = {
       metaDescription:
         'Lernen Sie Alireza Alamshah kennen — Python-Entwickler und Webdesigner; Fähigkeiten, Erfahrung und Werdegang.',
       intro: [
-        'Ich bin Alireza Alamshah, Python-Entwickler und Webdesigner. Am meisten begeistert mich, Werkzeuge zu bauen, die die Arbeit anderer Menschen erleichtern — von Automatisierungsskripten bis zu kompletten Websites.',
+        'Ich bin Alireza Alamshah, IT-Fachmann mit über 13 Jahren Erfahrung in Programmierung, Produktmanagement und der Leitung technischer Teams. Am meisten begeistert mich, Werkzeuge zu bauen, die die Arbeit anderer Menschen erleichtern — von Automatisierungsskripten für Produktionslinien bis zu kompletten Webanwendungen.',
         'Neben der Softwareentwicklung teile ich meine Erfahrung in Form von kostenlosen Tutorials und Kurspaketen, um anderen den Lernweg zu verkürzen.',
       ],
       skillsTitle: 'Fähigkeiten',
       skillGroups: [
-        { title: 'Python', items: 'Automatisierung, Skripting, Telegram-Bots, Web-Scraping' },
-        { title: 'Web', items: 'HTML & CSS, JavaScript, Responsive Design, SEO' },
-        { title: 'Werkzeuge', items: 'Git & GitHub, Linux, VS Code' },
+        { title: 'Sprachen', items: 'Python, JavaScript & TypeScript, T-SQL, HTML & CSS' },
+        { title: 'Frameworks', items: 'Django, Flask, FastAPI, React, Node.js, WordPress' },
+        { title: 'Daten & KI', items: 'Power BI, pandas, NumPy, Scikit-Learn, OpenCV, Selenium' },
+        { title: 'Datenbanken & Tools', items: 'MySQL, MongoDB, SQLite, Linux, Git' },
       ],
+      experienceTitle: 'Berufserfahrung',
+      educationTitle: 'Ausbildung',
+      languagesTitle: 'Sprachen',
+      certificatesTitle: 'Zertifikate',
+      certHoursUnit: 'Std.',
+      certScoreLabel: 'Note',
+      certNoLabel: 'Zertifikat-Nr.',
+      certVerifyCta: 'Zertifikat prüfen',
+      printCta: 'Lebenslauf als PDF',
     },
     portfolio: {
       title: 'Portfolio',

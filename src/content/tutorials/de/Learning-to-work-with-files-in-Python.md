@@ -16,11 +16,13 @@ Wenn Sie eine Datei mit der `open`-Funktion öffnen, müssen Sie sie am Ende wie
 Um in eine neue Datei zu schreiben:
 
 ```python
+
 with open("note.txt", "w", encoding="utf-8") as file:
     file.write("Hallo Python!")
 ```
 Um Daten aus derselben Datei zu lesen:
 ```python
+
 with open("note.txt", "r", encoding="utf-8") as file:
     content = file.read()
     print(content)
