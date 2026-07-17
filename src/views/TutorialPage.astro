@@ -103,6 +103,13 @@ const jsonLd = [
   const label = prose?.dataset.copy ?? 'Copy';
   const done = prose?.dataset.copied ?? '✓';
   for (const pre of document.querySelectorAll('.prose pre')) {
+    // Wrap the scrollable <pre> so the button anchors outside the scroll
+    // container and stays fixed while the code scrolls horizontally.
+    const wrap = document.createElement('div');
+    wrap.className = 'code-block';
+    pre.parentNode?.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'code-copy';
@@ -113,7 +120,7 @@ const jsonLd = [
       btn.textContent = done;
       setTimeout(() => (btn.textContent = label), 2000);
     });
-    pre.appendChild(btn);
+    wrap.appendChild(btn);
   }
 </script>
 

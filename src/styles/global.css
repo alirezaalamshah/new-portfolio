@@ -76,7 +76,6 @@ code {
 }
 
 pre {
-  position: relative;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: var(--space-3);
@@ -86,7 +85,18 @@ pre {
   text-align: left;
 }
 
-/* copy button injected on tutorial code blocks */
+/* wrapper injected around tutorial code blocks — anchors the copy button
+   OUTSIDE the scroll container so it stays put while the code scrolls */
+.code-block {
+  position: relative;
+  direction: ltr;
+  margin-block: 1em;
+}
+
+.code-block > pre {
+  margin: 0;
+}
+
 .code-copy {
   position: absolute;
   inset-block-start: 0.5rem;
@@ -103,7 +113,7 @@ pre {
   transition: opacity 150ms ease-out, border-color 150ms ease-out;
 }
 
-pre:hover .code-copy,
+.code-block:hover .code-copy,
 .code-copy:focus-visible {
   opacity: 1;
 }
