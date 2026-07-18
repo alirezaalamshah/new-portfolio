@@ -3,7 +3,6 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // TODO: دامین خودت را اینجا بگذار (مثلاً https://ali.dev)
   site: 'https://alirezaalamshah.ir',
   trailingSlash: 'always',
   i18n: {

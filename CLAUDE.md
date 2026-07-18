@@ -15,10 +15,10 @@ Trilingual static portfolio built with Astro. Persian (default, RTL) at `/`, Eng
 - **Pages**: shared implementations live in `src/views/*.astro`; files under `src/pages/` (root=fa, `en/`, `de/`) are 3-line wrappers passing `lang`. Add a new page by creating one view + three wrappers.
 - **Content**: Markdown collections in `src/content/{projects,products,tutorials}/<lang>/<slug>.md` — the slug must be identical across all three languages so hreflang alternates line up. Schemas in `src/content.config.ts`. Projects support optional `demo`/`source` (URLs) and `pdf` (site-relative path; put files in `public/files/`). Astro lowercases entry slugs from filenames.
 - **Tutorials extras**: tag pages at `/tutorials/tag/<slug>/` (per-language, built from tags in frontmatter; they pass `noAlternates` to BaseLayout since tags differ per language), related-posts by shared tags on each tutorial, lazy-loaded Pagefind search on the list page (only tutorial pages carry `data-pagefind-body`), copy buttons on code blocks, RSS at `/rss.xml`, `/en/rss.xml`, `/de/rss.xml`.
-- **Analytics**: GoatCounter, off by default — set `goatcounter` in `src/data/site.ts` to enable.
+- **Analytics**: GoatCounter, enabled via `goatcounter` in `src/data/site.ts` (empty string disables it).
 - **SEO**: `BaseLayout.astro` handles title/description/canonical/hreflang/OG/JSON-LD; pass `path` as the locale-agnostic route.
 - **Shop is showcase-only**: product pages have no checkout; buy CTA links to contact. Planned upgrade: Zarinpal links.
-- Contact email/socials: `src/data/site.ts` (socials still TODO placeholders).
+- Contact email/socials: `src/data/site.ts`.
 
 ## Constraints
 

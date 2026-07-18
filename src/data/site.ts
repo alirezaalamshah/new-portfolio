@@ -8,7 +8,6 @@ export const goatcounter = 'alirezaalamshah';
 /** Central contact info — edit once, used everywhere. */
 export const contact = {
   email: 'info@alirezaalamshah.ir',
-  // TODO: آدرس‌های واقعی شبکه‌های اجتماعی خودت را بگذار
   socials: [
     { label: 'GitHub', url: 'https://github.com/alirezaalamshah/' },
     { label: 'Telegram', url: 'https://t.me/alirezaalamsha' },
