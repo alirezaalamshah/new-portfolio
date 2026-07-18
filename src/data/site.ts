@@ -3,7 +3,7 @@
  * Sign up free at goatcounter.com, put your code here, and the tracker
  * (~3.5KB, cookie-free) loads automatically. Empty string = analytics off.
  */
-export const goatcounter = '';
+export const goatcounter = 'alirezaalamshah';
 
 /** Central contact info — edit once, used everywhere. */
 export const contact = {
