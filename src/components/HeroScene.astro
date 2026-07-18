@@ -50,31 +50,39 @@
     </g>
   </g>
 
-  <!-- floating glyph cubes -->
-  <g class="float f1">
-    <g transform="translate(415,85)">
-      <polygon points="0,0 34.6,20 0,40 -34.6,20" class="cube-top" />
-      <polygon points="-34.6,20 -34.6,60 0,80 0,40" class="cube-left" />
-      <polygon points="34.6,20 34.6,60 0,80 0,40" class="cube-right" />
-      <text transform="matrix(0.866,0.5,-0.866,0.5,0,0)" x="20" y="26" text-anchor="middle" class="glyph tk-accent" font-size="15">&lt;/&gt;</text>
+  <!-- glyph cubes orbiting the terminal like planets:
+       nested X/Y animations, 90° out of phase → elliptical (isometric) path;
+       the three cubes are offset by a third of the period each -->
+  <g class="orbit-x c1x">
+    <g class="orbit-y c1y">
+      <g transform="translate(415,85)">
+        <polygon points="0,0 34.6,20 0,40 -34.6,20" class="cube-top" />
+        <polygon points="-34.6,20 -34.6,60 0,80 0,40" class="cube-left" />
+        <polygon points="34.6,20 34.6,60 0,80 0,40" class="cube-right" />
+        <text transform="matrix(0.866,0.5,-0.866,0.5,0,0)" x="20" y="26" text-anchor="middle" class="glyph tk-accent" font-size="15">&lt;/&gt;</text>
+      </g>
     </g>
   </g>
 
-  <g class="float f2">
-    <g transform="translate(72,140)">
-      <polygon points="0,0 26,15 0,30 -26,15" class="cube-top warm" />
-      <polygon points="-26,15 -26,45 0,60 0,30" class="cube-left warm" />
-      <polygon points="26,15 26,45 0,60 0,30" class="cube-right" />
-      <text transform="matrix(0.866,0.5,-0.866,0.5,0,0)" x="15" y="20" text-anchor="middle" class="glyph tk-warm" font-size="12">{ }</text>
+  <g class="orbit-x c2x">
+    <g class="orbit-y c2y">
+      <g transform="translate(72,140)">
+        <polygon points="0,0 26,15 0,30 -26,15" class="cube-top warm" />
+        <polygon points="-26,15 -26,45 0,60 0,30" class="cube-left warm" />
+        <polygon points="26,15 26,45 0,60 0,30" class="cube-right" />
+        <text transform="matrix(0.866,0.5,-0.866,0.5,0,0)" x="15" y="20" text-anchor="middle" class="glyph tk-warm" font-size="12">{ }</text>
+      </g>
     </g>
   </g>
 
-  <g class="float f3">
-    <g transform="translate(442,275)">
-      <polygon points="0,0 29.4,17 0,34 -29.4,17" class="cube-top" />
-      <polygon points="-29.4,17 -29.4,51 0,68 0,34" class="cube-left" />
-      <polygon points="29.4,17 29.4,51 0,68 0,34" class="cube-right" />
-      <text transform="matrix(0.866,0.5,-0.866,0.5,0,0)" x="17" y="23" text-anchor="middle" class="glyph tk-muted" font-size="14">#</text>
+  <g class="orbit-x c3x">
+    <g class="orbit-y c3y">
+      <g transform="translate(442,275)">
+        <polygon points="0,0 29.4,17 0,34 -29.4,17" class="cube-top" />
+        <polygon points="-29.4,17 -29.4,51 0,68 0,34" class="cube-left" />
+        <polygon points="29.4,17 29.4,51 0,68 0,34" class="cube-right" />
+        <text transform="matrix(0.866,0.5,-0.866,0.5,0,0)" x="17" y="23" text-anchor="middle" class="glyph tk-muted" font-size="14">#</text>
+      </g>
     </g>
   </g>
 
@@ -170,29 +178,44 @@
     opacity: 0.5;
   }
 
+  /* Orbit: X and Y run the same alternating ease-in-out wave, Y delayed by a
+     quarter period → smooth ellipse. Full revolution = 6s. Ellipse is 2:1
+     (±28px / ±14px) to match the isometric perspective. */
   @media (prefers-reduced-motion: no-preference) {
-    .float {
-      animation: float 7s ease-in-out infinite;
+    .orbit-x {
+      animation: orbit-x 3s ease-in-out infinite alternate;
     }
 
-    .f2 {
-      animation-duration: 8s;
-      animation-delay: -2.5s;
+    .orbit-y {
+      animation: orbit-y 3s ease-in-out infinite alternate;
     }
 
-    .f3 {
-      animation-duration: 6.5s;
-      animation-delay: -4s;
-    }
+    .c1x { animation-delay: 0s; }
+    .c1y { animation-delay: -1.5s; }
 
-    @keyframes float {
-      0%,
-      100% {
-        transform: translateY(0);
+    .c2x { animation-delay: -2s; }
+    .c2y { animation-delay: -3.5s; }
+
+    .c3x { animation-delay: -4s; }
+    .c3y { animation-delay: -5.5s; }
+
+    @keyframes orbit-x {
+      from {
+        transform: translateX(-28px);
       }
 
-      50% {
-        transform: translateY(-8px);
+      to {
+        transform: translateX(28px);
+      }
+    }
+
+    @keyframes orbit-y {
+      from {
+        transform: translateY(-14px);
+      }
+
+      to {
+        transform: translateY(14px);
       }
     }
   }

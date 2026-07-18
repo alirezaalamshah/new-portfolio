@@ -71,11 +71,14 @@ spinning scenes.
   `prefers-reduced-motion: no-preference`. Touch devices get the plain card.
   One shared inline script in `BaseLayout` (~0.5KB) drives it — never a library.
 - **Isometric hero scene:** `src/components/HeroScene.astro` — a hand-drawn
-  inline SVG (isometric terminal on a platform with floating glyph cubes).
+  inline SVG (isometric terminal on a platform with orbiting glyph cubes).
   Rules: fills use design tokens only (`var(--…)`) so it re-themes itself;
-  `aria-hidden="true"` (purely decorative); float animation ≤8px amplitude,
-  ≥6s period, wrapped in `prefers-reduced-motion: no-preference`; total SVG
-  ≤10KB. Code text inside the scene stays English/LTR in all locales — it's code.
+  `aria-hidden="true"` (purely decorative); cube motion is a planet-style
+  elliptical orbit built from two nested translate animations 90° out of
+  phase (2:1 iso ellipse, ±28px/±14px, 6s revolution, cubes phased a third
+  apart) — CSS transform only, no JS, wrapped in
+  `prefers-reduced-motion: no-preference`; total SVG ≤10KB. Code text inside
+  the scene stays English/LTR in all locales — it's code.
 - **Terminal caret:** the home `<h1>` ends with a blinking block caret
   (`steps(2)` blink, ~1.1s), motion-guarded. Only on the hero h1 — one caret
   per site.
