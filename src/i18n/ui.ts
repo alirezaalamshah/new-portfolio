@@ -78,6 +78,7 @@ export interface UIDict {
     publishedOn: string;
     backToList: string;
     searchPlaceholder: string;
+    searchUnavailable: string;
     copy: string;
     copied: string;
     related: string;
@@ -196,6 +197,7 @@ export const ui: Record<Lang, UIDict> = {
       publishedOn: 'تاریخ انتشار:',
       backToList: 'بازگشت به آموزش‌ها',
       searchPlaceholder: 'جستجو در آموزش‌ها…',
+      searchUnavailable: 'جستجو فعلاً در دسترس نیست (در حالت توسعه، ابتدا build بگیرید)',
       copy: 'کپی',
       copied: 'کپی شد ✓',
       related: 'آموزش‌های مرتبط',
@@ -313,6 +315,7 @@ export const ui: Record<Lang, UIDict> = {
       publishedOn: 'Published on:',
       backToList: 'Back to tutorials',
       searchPlaceholder: 'Search tutorials…',
+      searchUnavailable: 'Search is unavailable right now (in dev mode, run a build first)',
       copy: 'Copy',
       copied: 'Copied ✓',
       related: 'Related tutorials',
@@ -431,6 +434,7 @@ export const ui: Record<Lang, UIDict> = {
       publishedOn: 'Veröffentlicht am:',
       backToList: 'Zurück zu den Tutorials',
       searchPlaceholder: 'Tutorials durchsuchen…',
+      searchUnavailable: 'Die Suche ist derzeit nicht verfügbar (im Dev-Modus zuerst builden)',
       copy: 'Kopieren',
       copied: 'Kopiert ✓',
       related: 'Ähnliche Tutorials',

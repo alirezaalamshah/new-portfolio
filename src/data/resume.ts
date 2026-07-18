@@ -20,7 +20,7 @@ export const experience: Record<Lang, ExperienceEntry[]> = {
     {
       role: 'توسعه‌دهنده فول‌استک و کارشناس پشتیبانی نرم‌افزار',
       company: 'شرکت الوان — تهران',
-      period: '۱۴۰۳ – اکنون',
+      period: '۱۴۰۴ – اکنون',
       points: [
         'توسعه، نگهداری و بهینه‌سازی نرم‌افزارهای سازمانی بر اساس نیاز کسب‌وکار',
         'عیب‌یابی و رفع مشکلات نرم‌افزاری با دیباگ و تحلیل ریشه‌ای خطاها',
@@ -82,7 +82,7 @@ export const experience: Record<Lang, ExperienceEntry[]> = {
     {
       role: 'Full-Stack Software Developer & Application Support Engineer',
       company: 'Alvan Company — Tehran',
-      period: 'June 2024 – Present',
+      period: 'June 2025 – Present',
       points: [
         'Develop, maintain, and optimize business applications based on organizational requirements',
         'Diagnose and resolve software issues through debugging and root-cause analysis',
@@ -144,7 +144,7 @@ export const experience: Record<Lang, ExperienceEntry[]> = {
     {
       role: 'Full-Stack-Softwareentwickler & Application-Support-Engineer',
       company: 'Alvan Company — Teheran',
-      period: 'Juni 2024 – heute',
+      period: 'Juni 2025 – heute',
       points: [
         'Entwicklung, Wartung und Optimierung von Geschäftsanwendungen nach organisatorischen Anforderungen',
         'Diagnose und Behebung von Softwareproblemen durch Debugging und Ursachenanalyse',

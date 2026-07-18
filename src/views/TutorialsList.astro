@@ -32,7 +32,7 @@ const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
     </header>
 
     <div class="toolbar">
-      <div id="search" class="search-box">
+      <div id="search" class="search-box" data-unavailable={t.tutorials.searchUnavailable}>
         <input
           type="search"
           id="search-trigger"
@@ -139,7 +139,14 @@ const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
         document.body.appendChild(s);
       });
     } catch {
-      return; // dev mode: index not built yet
+      // index not available (e.g. dev server) — say so instead of failing silently
+      const box = document.getElementById('search');
+      if (trigger && box?.dataset.unavailable) {
+        trigger.value = '';
+        trigger.placeholder = box.dataset.unavailable;
+        trigger.disabled = true;
+      }
+      return;
     }
 
     const query = trigger.value;
