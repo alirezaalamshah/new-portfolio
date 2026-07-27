@@ -14,6 +14,8 @@ Python developer & web designer. This repository is the source of my personal si
 ![Languages](https://img.shields.io/badge/i18n-fa%20%7C%20en%20%7C%20de-2C6E8E)
 ![JS shipped](https://img.shields.io/badge/JS%20shipped-%E2%89%A41KB-3A7D44)
 
+**[English](#what-this-is) | [فارسی](#فارسی)**
+
 </div>
 
 ---
@@ -85,6 +87,38 @@ I'm a Python developer and web designer based in Tehran, currently working as a 
 - 🌐 [alirezaalamshah.ir](https://alirezaalamshah.ir)
 - 💼 [LinkedIn](https://www.linkedin.com/in/ali-alamshah/)
 - 📮 [Telegram](https://t.me/alirezaalamsha)
+- ✉️ [info@alirezaalamshah.ir](mailto:info@alirezaalamshah.ir)
+
+---
+
+## فارسی
+
+### درباره‌ی این پروژه
+
+سورس سایت شخصی من — یک پورتفولیوی استاتیک سه‌زبانه (**فارسی** به‌صورت پیش‌فرض/راست‌به‌چپ، انگلیسی و آلمانی)، دست‌ساز و بدون هیچ ردیاب/تحلیل‌گر مزاحم، که هم پروژه‌ها و هم انضباط مهندسی پشت آن‌ها را نشان می‌دهد: جاوااسکریپت نزدیک به صفر، یک سیستم طراحی دست‌کشیده، و SEO/دسترسی‌پذیری به‌عنوان نیازمندی درجه‌یک نه یک فکر بعدی.
+
+شامل ۱۴ پروژه‌ی پورتفولیو، ۳ محصول نرم‌افزاری و ۷ آموزش رایگان برنامه‌نویسی است — همه در هر سه زبان با اسلاگ یکسان (برای هم‌ترازی صحیح hreflang)، یک صحنه‌ی هیرو ایزومتریک دست‌ساز با میکرو-اینترکشن، جست‌وجوی تمام‌متن روی آموزش‌ها (Pagefind) و آنالیتیکس بدون کوکی (GoatCounter).
+
+### پشته فناوری
+
+Astro 5 + TypeScript (strict)، Astro Content Collections برای محتوا، CSS خالص با logical properties (بدون build جداگانه برای راست‌به‌چپ/چپ‌به‌راست)، فونت وزیرمتن self-hosted، و استقرار خودکار روی GitHub Pages با GitHub Actions.
+
+### اجرای محلی
+
+```bash
+npm install
+npm run dev       # http://localhost:4321
+npm run build     # ساخت نسخه‌ی استاتیک در dist/
+npm run preview   # پیش‌نمایش build (جست‌وجو به‌صورت محلی نیاز به python -m http.server دارد)
+```
+
+### درباره‌ی من
+
+توسعه‌دهنده‌ی پایتون و طراح وب مستقر در تهران، در حال حاضر توسعه‌دهنده‌ی فول‌استک و مهندس پشتیبانی اپلیکیشن. پیش از این، مسئول یک خط تولید با ظرفیت ۵۰۰ مودم در روز بودم و ابزارهای پایتون برای اتوماسیون آن نوشتم، مدیریت IT چند شرکت را برعهده داشتم و به بیش از ۳۰ نفر پایتون آموزش دادم. جزئیات کامل در بخش [نمونه‌کارها](https://alirezaalamshah.ir/portfolio/) و [رزومه](https://alirezaalamshah.ir/about/) روی سایت زنده موجود است.
+
+- 🌐 [alirezaalamshah.ir](https://alirezaalamshah.ir)
+- 💼 [لینکدین](https://www.linkedin.com/in/ali-alamshah/)
+- 📮 [تلگرام](https://t.me/alirezaalamsha)
 - ✉️ [info@alirezaalamshah.ir](mailto:info@alirezaalamshah.ir)
 
 ---
