@@ -20,6 +20,10 @@ Python developer & web designer. This repository is the source of my personal si
 
 ---
 
+## Screenshot
+
+![alirezaalamshah.ir — live homepage](docs/screenshot.png)
+
 ## What this is
 
 A static, three-language portfolio (**Persian** default/RTL, **English**, **German**) built to showcase both the projects and the engineering discipline behind them: near-zero JavaScript, a hand-drawn design system, and SEO/accessibility treated as first-class requirements rather than an afterthought.
@@ -92,6 +96,10 @@ I'm a Python developer and web designer based in Tehran, currently working as a 
 ---
 
 ## فارسی
+
+### تصویر
+
+![alirezaalamshah.ir — صفحه اصلی زنده](docs/screenshot.png)
 
 ### درباره‌ی این پروژه
 
