@@ -20,7 +20,7 @@ Python developer & web designer. This repository is the source of my personal si
 
 ## Screenshot
 
-![alirezaalamshah.ir — live homepage](docs/Screenshot.png)
+![alirezaalamshah.ir — live homepage](docs/Screenshot 2026-08-01 112301.png)
 
 ## What this is
 
