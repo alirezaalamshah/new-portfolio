@@ -75,7 +75,7 @@ Note: `encoding="utf-8-sig"` makes Excel open non-Latin text correctly.
 
 ## When the page is built with JavaScript
 
-`requests` only fetches the initial HTML. If the data loads later via JavaScript, you need a heavier tool like Selenium, which drives a real browser — the topic of an upcoming tutorial.
+`requests` only fetches the initial HTML. If the data loads later via JavaScript, you need a heavier tool like Selenium, which drives a real browser — exactly the topic of [my next tutorial](/en/tutorials/web-scraping-selenium-python/).
 
 ## Exercise
 

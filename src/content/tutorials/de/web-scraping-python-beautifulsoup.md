@@ -75,7 +75,7 @@ Hinweis: `encoding="utf-8-sig"` sorgt dafür, dass Excel Sonderzeichen korrekt �
 
 ## Wenn die Seite mit JavaScript aufgebaut wird
 
-`requests` holt nur das anfängliche HTML. Werden die Daten erst per JavaScript nachgeladen, brauchen Sie ein schwereres Werkzeug wie Selenium, das einen echten Browser steuert — Thema eines kommenden Tutorials.
+`requests` holt nur das anfängliche HTML. Werden die Daten erst per JavaScript nachgeladen, brauchen Sie ein schwereres Werkzeug wie Selenium, das einen echten Browser steuert — genau das Thema meines [nächsten Tutorials](/de/tutorials/web-scraping-selenium-python/).
 
 ## Übung
 
